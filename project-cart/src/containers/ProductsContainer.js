@@ -9,10 +9,10 @@ import ActionCreator from '../actions/ActionCreator';
 class ProductsContainer extends React.Component {
     showProduct = (products) => {
         let result = null;
-        let { handleAddToCart } = this.props
+        let { handleAddToCart, handleChangeMessage } = this.props
         if (products.length > 0) {
             result = products.map((product) => {
-                return <Product key= {product.id} product={product} handleAddToCart={handleAddToCart}/>
+                return <Product key= {product.id} product={product} handleAddToCart={handleAddToCart} handleChangeMessage={handleChangeMessage}/>
             })
         }
         return result;
@@ -39,7 +39,8 @@ ProductsContainer.propTypes = {
             inventory: PropTypes.number.isRequired,
             rating: PropTypes.number.isRequired
         })
-    ).isRequired
+    ).isRequired,
+    handleChangeMessage: PropTypes.func.isRequired
 }
 const mapStateToProps = state => {
     return {
@@ -51,6 +52,9 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         handleAddToCart: (product) => {
             dispatch(ActionCreator.addToCart(product, 1))
+        },
+        handleChangeMessage: (message) => {
+            dispatch(ActionCreator.changeMessage(message))
         }
     }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { MSG_UPDATE_CART_SUCCESS } from '../constants/Message';
 class Product extends React.Component {
     showRating = (rating) => {
         let result = [];
@@ -16,7 +16,8 @@ class Product extends React.Component {
     }
 
     handleAddToCart = (product) => {
-        this.props.handleAddToCart(product)
+        this.props.handleAddToCart(product);
+        this.props.handleChangeMessage(MSG_UPDATE_CART_SUCCESS);
     }
     
     render() {

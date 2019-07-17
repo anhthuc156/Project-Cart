@@ -5,15 +5,18 @@ import Cart from '../components/Cart';
 import { MSG_CART_EMPTY } from '../constants/Message';
 import CartItem from '../components/CartItem';
 import CartResult from '../components/CartResult';
+import ActionCreator from '../actions/ActionCreator';
 
 
 class CartContainer extends React.Component {
+    
     showCartItem = (cart) => {
-        var result = MSG_CART_EMPTY;
+    const { handleDelete } = this.props;
+    var result = <tr><td>{MSG_CART_EMPTY}</td></tr>;
         if (cart.length > 0) {
             result = cart.map((item, index) => {
                 return (
-                    <CartItem key={index} item={item} index={index}/>
+                    <CartItem key={index} item={item} index={index} handleDelete={handleDelete}/>
                 )
             })
         }
@@ -29,7 +32,6 @@ class CartContainer extends React.Component {
     }
     render() {
         let { cart } = this.props;
-        console.log(cart);
         return (
             <Cart>
                 {this.showCartItem(cart)}
@@ -61,4 +63,12 @@ const mapStateToProps = state => {
        cart: state.cart
     }
 }
-export default connect(mapStateToProps, null)(CartContainer);
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        handleDelete: (product) => {
+            dispatch(ActionCreator.removeProductInCart(product))
+        }
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(CartContainer);
