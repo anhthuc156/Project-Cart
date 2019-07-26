@@ -1,4 +1,4 @@
-import { ADD_TO_CART, DELETE_PRODUCT_IN_CART } from "../constants/ActionTypes";
+import { ADD_TO_CART, DELETE_PRODUCT_IN_CART, UPDATE_PRODUCT_IN_CART } from "../constants/ActionTypes";
 var data = JSON.parse(localStorage.getItem('CART'));
 
 var initialState = data ? data : [];
@@ -40,6 +40,15 @@ const CartReducer = (state= initialState, action) => {
             }
             localStorage.setItem('CART', JSON.stringify(state))
             return [...state];
+
+        case UPDATE_PRODUCT_IN_CART:
+            index = findProductInCart(state, product);
+            if (index !== -1) {
+                state[index].quantity = quantity
+            }
+            localStorage.setItem('CART', JSON.stringify(state))
+            return [...state];
+            
         default:
             return [...state];
     }

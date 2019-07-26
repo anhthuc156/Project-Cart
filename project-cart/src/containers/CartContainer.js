@@ -11,12 +11,13 @@ import ActionCreator from '../actions/ActionCreator';
 class CartContainer extends React.Component {
     
     showCartItem = (cart) => {
-    const { handleDelete } = this.props;
+    const { handleDelete, handleChangeMessage, handleUpdateInCart } = this.props;
     var result = <tr><td>{MSG_CART_EMPTY}</td></tr>;
         if (cart.length > 0) {
             result = cart.map((item, index) => {
                 return (
-                    <CartItem key={index} item={item} index={index} handleDelete={handleDelete}/>
+                    <CartItem key={index} item={item} index={index}
+                            handleDelete={handleDelete} handleChangeMessage={handleChangeMessage} handleUpdateInCart={handleUpdateInCart}/>
                 )
             })
         }
@@ -68,6 +69,12 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         handleDelete: (product) => {
             dispatch(ActionCreator.removeProductInCart(product))
+        },
+        handleChangeMessage: (message) => {
+            dispatch(ActionCreator.changeMessage(message))
+        },
+        handleUpdateInCart: (product, quantity) => {
+            dispatch(ActionCreator.updateProductInCart(product, quantity))
         }
     }
 }

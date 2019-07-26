@@ -1,4 +1,4 @@
-import { ADD_TO_CART, CHANGE_MESSAGE, DELETE_PRODUCT_IN_CART } from '../constants/ActionTypes';
+import { ADD_TO_CART, CHANGE_MESSAGE, DELETE_PRODUCT_IN_CART, UPDATE_PRODUCT_IN_CART } from '../constants/ActionTypes';
 
 export default {
     addToCart: (product, quantity) => ({
@@ -13,5 +13,10 @@ export default {
     removeProductInCart: (product) => ({
         type: DELETE_PRODUCT_IN_CART,
         product
+    }),
+    updateProductInCart: (product, quantity) => ({
+        type: UPDATE_PRODUCT_IN_CART,
+        product,
+        quantity
     })
 }

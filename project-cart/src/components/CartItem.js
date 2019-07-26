@@ -1,15 +1,29 @@
 import React from 'react';
+import { MSG_DELETE_PRODUCT_IN_CART_SUCCESS, MSG_UPDATE_CART_SUCCESS } from '../constants/Message';
 
 class CartItem extends React.Component {
+    
     showSubTotal = (price, quantity) => {
         return price * quantity;
     }
+
     handleDelete = (product) => {
-        const { handleDelete } = this.props;
+        const { handleDelete, handleChangeMessage } = this.props;
         handleDelete(product);
+        handleChangeMessage(MSG_DELETE_PRODUCT_IN_CART_SUCCESS)
     }
+
+    handleUpdateQuantity = (product,quantity) => {
+        if (quantity > 0) {
+            const { handleUpdateInCart, handleChangeMessage } = this.props;
+            handleUpdateInCart(product,quantity);
+            handleChangeMessage(MSG_UPDATE_CART_SUCCESS)
+        }
+    }
+
     render() {
-        var { item } = this.props;
+        const { item } = this.props;
+        const { quantity } = item;
         return (
             <tr>
                 <th scope="row">
@@ -23,14 +37,14 @@ class CartItem extends React.Component {
                 </td>
                 <td>{item.product.price}$</td>
                 <td className="center-on-small-only">
-                    <span className="qty">{item.quantity}</span>
+                    <span className="qty">{quantity}</span>
                     <div className="btn-group radio-group" data-toggle="buttons">
-                        <label className="btn btn-sm btn-primary
-                            btn-rounded waves-effect waves-light">
+                        <label onClick={() => {this.handleUpdateQuantity(item.product, item.quantity - 1)}}
+                             className="btn btn-sm btn-primary btn-rounded waves-effect waves-light">
                             <a>—</a>
                         </label>
-                        <label className="btn btn-sm btn-primary
-                            btn-rounded waves-effect waves-light">
+                        <label onClick={() => {this.handleUpdateQuantity(item.product, item.quantity + 1)}}
+                            className="btn btn-sm btn-primary btn-rounded waves-effect waves-light">
                             <a>+</a>
                         </label>
                     </div>
